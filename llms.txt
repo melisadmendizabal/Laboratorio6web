@@ -1,0 +1,238 @@
+# Introducción
+Este archivo documenta la API para la gestión de series de TV. La API permite a los usuarios agregar, actualizar, eliminar y obtener información sobre series, así como gestionar su estado, episodios y clasificación.
+
+Tecnologías utilizadas:
+- Go (Lenguaje de programación)
+- GORM (ORM para Go)
+- MariaDB (Base de datos)
+- Chi (Router para manejo de rutas)
+
+# Autenticación
+La API no requiere autenticación para realizar las operaciones descritas. Sin embargo, en un entorno de producción, se recomienda agregar seguridad a la API.
+
+# Endpoints principales
+
+## Crear una nueva serie
+- **Método**: `POST`
+- **URL**: `/api/series`
+- **Descripción**: Crea una nueva serie en la base de datos.
+- **Cuerpo de la solicitud**:
+  ```json
+  {
+    "title": "The Witcher",
+    "status": "Watching",
+    "lastEpisodeWatched": 5,
+    "totalEpisodes": 10,
+    "ranking": 8
+  }
+
+
+Respuesta exitosa:
+  {
+    "success": true,
+    "message": "Serie Registrada"
+  }
+
+Respuesta con error:
+
+  Si el título está vacío:
+  {
+    "success": false,
+    "message": "Ingrese una serie"
+  }
+
+Obtener todas las series
+Método: GET
+URL: /api/series
+Descripción: Obtiene la lista de todas las series registradas.
+Respuesta exitosa:
+
+  {
+    "id": 1,
+    "title": "The Witcher",
+    "status": "Ongoing",
+    "lastEpisodeWatched": 5,
+    "totalEpisodes": 10,
+    "ranking": 8
+  },
+  {
+    "id": 2,
+    "title": "Stranger Things",
+    "status": "Completed",
+    "lastEpisodeWatched": 8,
+    "totalEpisodes": 10,
+    "ranking": 9
+  }
+
+Obtener una serie por ID
+Método: GET
+URL: /api/series/{id}
+Descripción: Obtiene la información de una serie específica por su ID.
+Parámetros de la URL:
+{id}: El ID de la serie a buscar.
+
+Respuesta exitosa:
+  {
+    "id": 1,
+    "title": "The Witcher",
+    "status": "Ongoing",
+    "lastEpisodeWatched": 5,
+    "totalEpisodes": 10,
+    "ranking": 8
+  }
+
+Respuesta con error:
+Si no se encuentra la serie:
+
+  {
+    "success": false,
+    "message": "Serie no encontrada"
+  }
+
+Actualizar una serie por ID
+Método: PUT
+URL: /api/series/{id}
+Descripción: Actualiza la información de una serie.
+Parámetros de la URL:
+{id}: El ID de la serie a actualizar.
+Cuerpo de la solicitud:
+  {
+    "title": "The Witcher - Season 2",
+    "status": "Ongoing",
+    "lastEpisodeWatched": 6,
+    "totalEpisodes": 10,
+    "ranking": 9
+  }
+Respuesta exitosa:
+  {
+    "success": true,
+    "message": "Serie Actualizada"
+  }
+
+Eliminar una serie por ID
+Método: DELETE
+URL: /api/series/{id}
+Descripción: Elimina una serie específica por su ID.
+Parámetros de la URL:
+{id}: El ID de la serie a eliminar.
+Respuesta exitosa:
+  {
+    "success": true,
+    "message": "Serie Eliminada"
+  }
+
+Actualizar el ranking de una serie
+Método: PATCH
+URL: /api/series/{id}/upvote
+Descripción: Aumenta el ranking de una serie.
+Parámetros de la URL:
+{id}: El ID de la serie a actualizar.
+Respuesta exitosa:
+
+  {
+    "success": true,
+    "message": "Ranking actualizado",
+    "data": {
+      "id": 1,
+      "title": "The Witcher",
+      "status": "Ongoing",
+      "lastEpisodeWatched": 5,
+      "totalEpisodes": 10,
+      "ranking": 9
+    }
+  }
+
+Decrementar el ranking de una serie
+Método: PATCH
+URL: /api/series/{id}/downvote
+Descripción: Disminuye el ranking de una serie.
+Parámetros de la URL:
+{id}: El ID de la serie a actualizar.
+Respuesta exitosa:
+
+  {
+    "success": true,
+    "message": "Ranking actualizado",
+    "data": {
+      "id": 1,
+      "title": "The Witcher",
+      "status": "Ongoing",
+      "lastEpisodeWatched": 5,
+      "totalEpisodes": 10,
+      "ranking": 7
+    }
+  }
+
+Actualizar el estado de una serie
+Método: PATCH
+URL: /api/series/{id}/status
+Descripción: Actualiza el estado de una serie.
+Parámetros de la URL:
+{id}: El ID de la serie a actualizar.
+Cuerpo de la solicitud:
+  {
+    "status": "Completed"
+  }
+
+Respuesta exitosa:
+  {
+    "success": true,
+    "message": "Estado actualizado",
+    "data": {
+      "id": 1,
+      "title": "The Witcher",
+      "status": "Completed",
+      "lastEpisodeWatched": 5,
+      "totalEpisodes": 10,
+      "ranking": 8
+    }
+  }
+
+Actualizar el número de episodios vistos
+Método: PATCH
+URL: /api/series/{id}/episode
+Descripción: Aumenta el número de episodios vistos de una serie.
+Parámetros de la URL:
+{id}: El ID de la serie a actualizar.
+Respuesta exitosa:
+
+  {
+    "success": true,
+    "message": "Episodio actualizado",
+    "data": {
+      "id": 1,
+      "title": "The Witcher",
+      "status": "Ongoing",
+      "lastEpisodeWatched": 6,
+      "totalEpisodes": 10,
+      "ranking": 8
+    }
+  }
+
+Errores comunes
+400 Bad Request: Si los datos enviados en la solicitud son inválidos o faltan parámetros requeridos.
+404 Not Found: Si no se encuentra la serie o el endpoint solicitado.
+500 Internal Server Error: Si ocurre un error en el servidor durante la ejecución de la solicitud.
+
+Requisitos del sistema
+Go 1.18+
+
+MariaDB 10.3+
+
+GORM
+
+Instrucciones de instalación
+Clonar el repositorio.
+
+Configurar las variables de entorno para la base de datos.
+
+Ejecutar las migraciones necesarias para la base de datos.
+
+Ejecutar el servidor:
+go run main.go
+
+Notas adicionales
+Para pruebas locales, se recomienda usar una herramienta como Postman o cURL para interactuar con la API.
+
+La base de datos puede ser configurada utilizando un contenedor Docker.
+
