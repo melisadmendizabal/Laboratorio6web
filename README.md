@@ -3,6 +3,8 @@
 ### Melisa Mendizabal 23778
 
 ¡Bienvenido al proyecto de integración con APIs! Este laboratorio tiene como objetivo aprender y trabajar con APIs y bases de datos. A continuación se detallan los pasos para ejecutar tanto el frontend, el backend, como la base de datos que usa este sistema.
+![image](https://github.com/user-attachments/assets/cb38c2ec-713c-4328-976d-72633329969d)
+
 
 ### 1. **Ejecutando el Frontend**
 
