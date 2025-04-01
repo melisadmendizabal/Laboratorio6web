@@ -12,8 +12,6 @@ Para ver la interfaz gráfica del proyecto y asegurar que todos los íconos del 
 
 1. Navega al directorio `series-tracker` (dentro de la carpeta donde se encuentra este archivo README).
 2. Ejecuta el siguiente comando:
-
-   ```bash
 python3 -m http.server 8000
 Una vez que el servidor esté corriendo, abre tu navegador y accede a la siguiente URL:
 http://127.0.0.1:8000
